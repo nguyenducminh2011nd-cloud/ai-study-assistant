@@ -3,82 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ Lý Học Tập C3 - Personal AI</title>
+    <title>AI Study Assistant - iOS 26 Futuristic</title>
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0f0f10; color: #e1e1e6; display: flex; height: 100vh; overflow: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif; }
+        
+        body { 
+            background: #050508; 
+            color: #f4f4f5; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+            padding: 12px;
+        }
 
-        /* Sidebar bên trái */
-        .sidebar { width: 260px; background-color: #161618; border-right: 1px solid #27272a; display: flex; flex-direction: column; padding: 20px; }
-        .brand { font-size: 1.2rem; font-weight: bold; color: #3b82f6; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
-        .new-chat-btn { background-color: #27272a; color: #fff; border: 1px solid #3f3f46; padding: 10px 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 500; }
-        .new-chat-btn:hover { background-color: #3f3f46; }
-        .info-card { margin-top: auto; background-color: #1c1c1f; padding: 12px; border-radius: 8px; border: 1px solid #27272a; font-size: 0.85rem; color: #a1a1aa; }
+        /* Khung chứa viền LED RGB bọc ngoài */
+        .led-border-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            background-size: 300% 300%;
+            animation: animated-gradient 6s ease infinite;
+            box-shadow: 0 0 25px rgba(111, 186, 130, 0.25), 0 0 50px rgba(80, 115, 184, 0.15);
+        }
+
+        @keyframes animated-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Giao diện app chính bên trong kính mờ */
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 13, 18, 0.92);
+            backdrop-filter: blur(30px);
+            border-radius: 22px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar iOS */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.03);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 18px;
+            gap: 20px;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-new-chat {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .btn-new-chat:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .nav-list { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px;
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
 
         /* Khung Chat chính */
-        .main-chat { flex: 1; display: flex; flex-direction: column; background-color: #0f0f10; }
-        .chat-header { height: 60px; border-bottom: 1px solid #27272a; display: flex; align-items: center; padding: 0 25px; font-weight: 600; color: #f4f4f5; justify-content: space-between; }
-        .status-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; margin-right: 8px; }
-        
-        .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
-        .message { display: flex; gap: 15px; max-width: 80%; line-height: 1.6; }
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+        }
+
+        .chat-header {
+            height: 65px;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .led-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+            animation: pulse-led 2s infinite;
+        }
+
+        @keyframes pulse-led {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 28px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 14px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
         .message.user { align-self: flex-end; flex-direction: row-reverse; }
         .message.bot { align-self: flex-start; }
 
-        .avatar { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
-        .user .avatar { background-color: #2563eb; color: white; }
-        .bot .avatar { background-color: #10b981; color: white; }
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+        }
+        .user .avatar { background: linear-gradient(135deg, #2563eb, #3b82f6); color: #fff; }
+        .bot .avatar { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
 
-        .bubble { padding: 12px 18px; border-radius: 12px; font-size: 0.95rem; white-space: pre-wrap; }
-        .user .bubble { background-color: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
-        .bot .bubble { background-color: #18181b; border: 1px solid #27272a; color: #e1e1e6; border-bottom-left-radius: 2px; }
+        .bubble {
+            padding: 14px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+        }
+        .user .bubble {
+            background: #2563eb;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .bot .bubble {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #f4f4f5;
+            border-bottom-left-radius: 4px;
+        }
 
-        /* Khung nhập liệu */
-        .input-area { padding: 20px 25px; background-color: #0f0f10; border-top: 1px solid #27272a; }
-        .input-box { display: flex; background-color: #18181b; border: 1px solid #27272a; border-radius: 10px; padding: 8px 12px; transition: 0.2s; }
-        .input-box:focus-within { border-color: #3b82f6; }
-        input { flex: 1; background: transparent; border: none; outline: none; color: white; padding: 8px; font-size: 0.95rem; }
-        button.send-btn { background-color: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
-        button.send-btn:hover { background-color: #1d4ed8; }
+        /* Thẻ Gợi Ý Nhanh */
+        .suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .sugg-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #a1a1aa;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sugg-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: #3b82f6;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
 
-        /* Responsiveness cho mobile */
+        /* Input Area iOS 26 */
+        .input-area {
+            padding: 20px 28px;
+            background: transparent;
+        }
+
+        .input-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 22px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s;
+        }
+        .input-wrapper:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 8px;
+            font-size: 0.95rem;
+        }
+        input::placeholder { color: #71717a; }
+
+        .btn-icon {
+            background: transparent;
+            border: none;
+            color: #a1a1aa;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-send {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+        .btn-send:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
+        }
+
         @media (max-width: 768px) {
             .sidebar { display: none; }
-            .message { max-width: 90%; }
+            body { padding: 0; }
+            .led-border-wrap { border-radius: 0; padding: 0; }
+            .app-container { border-radius: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="brand">🎓 AI Study Assistant</div>
-        <button class="new-chat-btn" onclick="clearChat()">+ Đoạn chat mới</button>
-        <div class="info-card">
-            📌 <b>Trợ lý Cấp 3</b><br>
-            Đang hoạt động trên Web cá nhân.
-        </div>
-    </div>
+    <!-- Khung LED RGB Bao Ngoài -->
+    <div class="led-border-wrap">
+        <div class="app-container">
+            
+            <!-- Sidebar iOS -->
+            <div class="sidebar">
+                <div class="brand">
+                    <i class="fa-solid fa-sparkles"></i> AI Study iOS 26
+                </div>
+                
+                <button class="btn-new-chat" onclick="clearChat()">
+                    <i class="fa-solid fa-plus"></i> Cuộc trò chuyện mới
+                </button>
 
-    <!-- Main Chat Area -->
-    <div class="main-chat">
-        <div class="chat-header">
-            <div><span class="status-dot"></span> AI Trợ Lý Học Tập</div>
-            <small style="color: #71717a; font-weight: normal;">THPT Target 3 Năm</small>
-        </div>
+                <div class="nav-list">
+                    <div class="nav-item active"><i class="fa-solid fa-message"></i> Trợ lý Học tập</div>
+                    <div class="nav-item"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
+                    <div class="nav-item"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
+                    <div class="nav-item"><i class="fa-solid fa-gear"></i> Cấu hình hệ thống</div>
+                </div>
 
-        <div class="chat-messages" id="chatBox">
-            <div class="message bot">
-                <div class="avatar">AI</div>
-                <div class="bubble">Xin chào Minh! Tôi là trợ lý AI đồng hành cùng bạn trong 3 năm cấp 3 tại THPT Nam Trực. Chúng ta bắt đầu nhé! 🚀</div>
+                <div class="info-card">
+                    <p style="color: #fff; font-weight: 600;">🏫 THPT Nam Trực</p>
+                    <p style="margin-top: 4px; font-size: 0.8rem;">Đồng hành 3 năm học tập & Săn học bổng Đại học.</p>
+                </div>
             </div>
-        </div>
 
-        <div class="input-area">
-            <div class="input-box">
-                <input type="text" id="userInput" placeholder="Nhập câu hỏi hoặc bài tập cần giải..." onkeydown="handleKeyPress(event)">
-                <button class="send-btn" onclick="sendMessage()">Gửi</button>
+            <!-- Main Chat -->
+            <div class="main-chat">
+                <div class="chat-header">
+                    <div class="status-badge">
+                        <span class="led-dot"></span>
+                        <span>Trợ Lý AI Học Tập</span>
+                    </div>
+                    <span style="font-size: 0.8rem; color: #71717a;"><i class="fa-solid fa-bolt" style="color: #eab308;"></i> Spatial UI v26.0</span>
+                </div>
+
+                <div class="chat-messages" id="chatBox">
+                    <div class="message bot">
+                        <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                        <div class="bubble">
+                            Chào Minh! Trợ lý AI iOS 26 Futurism đã sẵn sàng đồng hành cùng bạn tại THPT Nam Trực. Hôm nay bạn cần giải bài tập hay ôn luyện nội dung gì? 🚀
+                            
+                            <div class="suggestions">
+                                <div class="sugg-card" onclick="sendQuickMsg('Giải bài tập Toán / Lý lớp 10')">
+                                    <i class="fa-solid fa-calculator" style="color: #60a5fa;"></i> Bài tập Toán / Lý
+                                </div>
+                                <div class="sugg-card" onclick="sendQuickMsg('Lộ trình luyện thi HSA / MTA cấp 3')">
+                                    <i class="fa-solid fa-bullseye" style="color: #f472b6;"></i> Định hướng HSA/MTA
+                                </div>
+                                <div class="sugg-card" onclick="sendQuickMsg('Sửa bài luận Tiếng Anh & Ngữ pháp')">
+                                    <i class="fa-solid fa-language" style="color: #34d399;"></i> Sửa Tiếng Anh
+                                </div>
+                                <div class="sugg-card" onclick="sendQuickMsg('Ý tưởng thiết kế STEM TinkerCAD / Arduino')">
+                                    <i class="fa-solid fa-code" style="color: #c084fc;"></i> Dự án STEM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <button class="btn-icon" title="Đính kèm tệp / Bài tập"><i class="fa-solid fa-paperclip"></i></button>
+                        <input type="text" id="userInput" placeholder="Hỏi bài tập, tra cấu trúc, lập kế hoạch học..." onkeydown="handleKeyPress(event)">
+                        <button class="btn-icon" title="Nhập giọng nói"><i class="fa-solid fa-microphone"></i></button>
+                        <button class="btn-send" onclick="sendMessage()" title="Gửi"><i class="fa-solid fa-arrow-up"></i></button>
+                    </div>
+                </div>
+
             </div>
+
         </div>
     </div>
 
@@ -90,23 +406,28 @@
 
             let chatBox = document.getElementById("chatBox");
 
-            // Tin nhắn Người dùng
+            // User Message
             let userMsg = document.createElement("div");
             userMsg.className = "message user";
-            userMsg.innerHTML = `<div class="avatar">Tôi</div><div class="bubble">${escapeHtml(text)}</div>`;
+            userMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-user"></i></div><div class="bubble">${escapeHtml(text)}</div>`;
             chatBox.appendChild(userMsg);
 
             input.value = "";
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Phản hồi mẫu từ trợ lý AI cá nhân
+            // Bot Phản hồi
             setTimeout(() => {
                 let botMsg = document.createElement("div");
                 botMsg.className = "message bot";
-                botMsg.innerHTML = `<div class="avatar">AI</div><div class="bubble">Tôi đã nhận câu hỏi: "${escapeHtml(text)}". Sẵn sàng hỗ trợ bạn chinh phục các mục tiêu cấp 3!</div>`;
+                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận: "<b>${escapeHtml(text)}</b>".<br><br>Đang tính toán và xử lý câu trả lời cho bạn...</div>`;
                 chatBox.appendChild(botMsg);
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
+            }, 500);
+        }
+
+        function sendQuickMsg(text) {
+            document.getElementById("userInput").value = text;
+            sendMessage();
         }
 
         function handleKeyPress(e) {
@@ -116,8 +437,8 @@
         function clearChat() {
             document.getElementById("chatBox").innerHTML = `
                 <div class="message bot">
-                    <div class="avatar">AI</div>
-                    <div class="bubble">Đã làm mới đoạn chat! Bạn cần giúp gì tiếp theo?</div>
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="bubble">Đã dọn dẹp đoạn chat! Bạn cần hỗ trợ gì tiếp theo?</div>
                 </div>`;
         }
 
