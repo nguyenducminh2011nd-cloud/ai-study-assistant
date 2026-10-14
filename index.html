@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Assistant - iOS 26 Ultimate Glass</title>
+    <title>AI Study Assistant - iOS 26 Ultimate Suite</title>
     <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,21 +19,21 @@
             justify-content: center; 
             align-items: center; 
             overflow: hidden; 
-            padding: 24px; /* Tạo khoảng trống xung quanh để thấy rõ dải LED viền */
-            background-image: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.2) 0%, transparent 40%),
-                              radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.18) 0%, transparent 40%),
-                              radial-gradient(circle at 50% 50%, rgba(5, 10, 20, 0.95) 100%);
+            padding: 24px;
+            background-image: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
+                              radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.2) 0%, transparent 45%),
+                              radial-gradient(circle at 50% 50%, rgba(3, 7, 18, 0.95) 100%);
         }
 
-        /* Khung dải LED RGB chạy động bọc ngoài rực rỡ */
+        /* Khung dải LED RGB chạy động bọc ngoài */
         .led-border-wrap {
             position: relative;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1450px;
             height: 100%;
-            max-height: 880px;
+            max-height: 900px;
             border-radius: 36px;
-            padding: 3px; /* Độ dày dải viền LED */
+            padding: 3px;
             background: linear-gradient(60deg, #38bdf8, #818cf8, #c084fc, #f472b6, #38bdf8);
             background-size: 300% 300%;
             animation: animated-gradient 5s ease infinite;
@@ -46,12 +46,12 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Giao diện app chính bên trong kính mờ trong suốt */
+        /* Giao diện app chính bên trong kính mờ */
         .app-container {
             width: 100%;
             height: 100%;
-            background: rgba(13, 20, 35, 0.45); /* Cực trong suốt, hòa màu nền */
-            backdrop-filter: blur(50px); /* Hiệu ứng kính mờ sâu */
+            background: rgba(13, 20, 35, 0.5);
+            backdrop-filter: blur(50px);
             -webkit-backdrop-filter: blur(50px);
             border-radius: 34px;
             display: flex;
@@ -61,14 +61,15 @@
 
         /* Sidebar iOS */
         .sidebar {
-            width: 280px;
+            width: 300px;
             background: rgba(255, 255, 255, 0.02);
             border-right: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             flex-direction: column;
             padding: 24px 18px;
-            gap: 20px;
+            gap: 16px;
             backdrop-filter: blur(20px);
+            overflow-y: auto;
         }
 
         .brand {
@@ -102,13 +103,13 @@
             transform: translateY(-2px);
         }
 
-        .nav-list { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .nav-list { display: flex; flex-direction: column; gap: 6px; }
         .nav-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 14px;
-            border-radius: 16px;
+            padding: 10px 14px;
+            border-radius: 14px;
             color: #94a3b8;
             font-size: 0.9rem;
             cursor: pointer;
@@ -120,14 +121,16 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .info-card {
+        /* Tiện ích Mini trong Sidebar */
+        .widget-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 14px;
+            border-radius: 16px;
+            padding: 12px 14px;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: #cbd5e1;
         }
+        .widget-title { font-weight: 600; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; }
 
         /* Khung Chat chính */
         .main-chat {
@@ -340,7 +343,7 @@
     <div class="led-border-wrap">
         <div class="app-container">
             
-            <!-- Sidebar iOS -->
+            <!-- Sidebar iOS & Tiện ích -->
             <div class="sidebar">
                 <div class="brand">
                     <i class="fa-solid fa-sparkles"></i> AI Study iOS
@@ -352,14 +355,30 @@
 
                 <div class="nav-list">
                     <div class="nav-item active"><i class="fa-solid fa-message"></i> Trợ lý Học tập</div>
-                    <div class="nav-item"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
-                    <div class="nav-item"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
-                    <div class="nav-item"><i class="fa-solid fa-gear"></i> Cấu hình hệ thống</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Lập lộ trình ôn thi HSA / MTA')"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Gợi ý dự án STEM Arduino/TinkerCAD')"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Mẹo quản lý thời gian học tập hiệu quả')"><i class="fa-solid fa-clock"></i> Pomodoro & Focus</div>
                 </div>
 
-                <div class="info-card">
-                    <p style="color: #fff; font-weight: 600;">🏫 THPT Nam Trực</p>
-                    <p style="margin-top: 4px; font-size: 0.8rem;">Đồng hành 3 năm học tập & Săn học bổng Đại học.</p>
+                <!-- Tiện ích 1: Đếm ngược thời gian / Ngày tháng -->
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-calendar-days"></i> Năm học 2026 - 2027</div>
+                    <div style="font-size: 0.8rem; color: #94a3b8;">THPT Nam Trực - Khối 10<br>Mục tiêu: Săn học bổng Đại học & HSA</div>
+                </div>
+
+                <!-- Tiện ích 2: Pomodoro nhanh -->
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-stopwatch"></i> Hẹn giờ học tập</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                        <span id="timerDisplay" style="font-weight: bold; color: #38bdf8; font-size: 1rem;">25:00</span>
+                        <button onclick="startPomodoro()" style="background: #2563eb; color: #fff; border: none; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75rem;">Bắt đầu</button>
+                    </div>
+                </div>
+
+                <!-- Tiện ích 3: Ghi chú nhanh cá nhân -->
+                <div class="widget-box" style="margin-top: auto;">
+                    <div class="widget-title"><i class="fa-solid fa-note-sticky"></i> Ghi chú nhanh</div>
+                    <textarea placeholder="Nhập nhanh ý tưởng, công thức..." style="width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; padding: 6px; font-size: 0.8rem; resize: none; height: 50px; outline: none;"></textarea>
                 </div>
             </div>
 
@@ -370,14 +389,14 @@
                         <span class="led-dot"></span>
                         <span>Trợ Lý AI Học Tập</span>
                     </div>
-                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> Ultimate Glass v26.0</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> Ultimate Suite v26.0</span>
                 </div>
 
                 <div class="chat-messages" id="chatBox">
                     <div class="message bot">
                         <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                         <div class="bubble">
-                            Chào Minh! Giao diện đã được thu gọn để **dải LED RGB viền động bọc trọn xung quanh**, kết hợp **hiệu ứng kính mờ trong suốt** cực kỳ trực quan và sang trọng. Hôm nay bạn cần hỗ trợ ôn tập môn gì tại THPT Nam Trực? 🚀
+                            Chào Minh! Giao diện đã được bổ sung thêm các tiện ích thông minh (Pomodoro, Ghi chú nhanh, Lịch học tập) cùng dải LED viền RGB rực rỡ. Hôm nay chúng ta bắt đầu với môn học nào? 🚀
                             
                             <div class="suggestions">
                                 <div class="sugg-card" onclick="sendQuickMsg('Giải bài tập Toán / Lý lớp 10')">
@@ -433,7 +452,7 @@
             setTimeout(() => {
                 let botMsg = document.createElement("div");
                 botMsg.className = "message bot";
-                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận: "<b>${escapeHtml(text)}</b>".<br><br>Đang xử lý dữ liệu học tập cho bạn...</div>`;
+                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận câu hỏi: "<b>${escapeHtml(text)}</b>".<br><br>Đang tra cứu cơ sở dữ liệu học tập để giải quyết cho bạn...</div>`;
                 chatBox.appendChild(botMsg);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 500);
@@ -452,8 +471,29 @@
             document.getElementById("chatBox").innerHTML = `
                 <div class="message bot">
                     <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                    <div class="bubble">Đã làm mới cuộc trò chuyện. Hãy nhập câu hỏi mới nhé!</div>
+                    <div class="bubble">Đã làm mới cuộc trò chuyện. Bạn cần hỗ trợ gì tiếp theo?</div>
                 </div>`;
+        }
+
+        // Pomodoro Timer đơn giản
+        let timerInterval;
+        function startPomodoro() {
+            clearInterval(timerInterval);
+            let totalSeconds = 25 * 60;
+            let display = document.getElementById("timerDisplay");
+            
+            timerInterval = setInterval(() => {
+                let minutes = Math.floor(totalSeconds / 60);
+                let seconds = totalSeconds % 60;
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                } else {
+                    clearInterval(timerInterval);
+                    alert("Đã hoàn thành 25 phút tập trung! Hãy nghỉ ngơi ngắn nhé.");
+                }
+            }, 1000);
         }
 
         function escapeHtml(text) {
