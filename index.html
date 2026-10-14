@@ -3,45 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Assistant - iOS 26 Personal Edition</title>
+    <title>AI Study Assistant - iOS 26 Pro</title>
     <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- PWA Meta tags -->
-    <meta name="theme-color" content="#020408">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712035.png">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif; }
-        
-        /* Ẩn hoàn toàn thanh cuộn */
         ::-webkit-scrollbar { display: none; }
         * { -ms-overflow-style: none; scrollbar-width: none; }
 
         body { 
-            background: #010204; 
+            background: #020408; 
             color: #f4f4f5; 
             height: 100vh; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             overflow: hidden; 
-            padding: 14px;
+            padding: 16px;
             background-image: radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.25) 0%, transparent 40%),
                               radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.22) 0%, transparent 40%),
                               radial-gradient(circle at 50% 50%, rgba(2, 6, 15, 0.98) 100%);
         }
 
-        /* Khung dải LED RGB chạy động bọc ngoài */
         .led-border-wrap {
             position: relative;
             width: 100%;
             max-width: 1420px;
             height: 100%;
-            max-height: 840px;
+            max-height: 850px;
             border-radius: 30px;
             padding: 3px;
             background: linear-gradient(60deg, #38bdf8, #818cf8, #c084fc, #f472b6, #38bdf8);
@@ -56,7 +47,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Giao diện app chính bên trong kính mờ */
         .app-container {
             width: 100%;
             height: 100%;
@@ -69,7 +59,6 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Sidebar iOS */
         .sidebar {
             width: 300px;
             background: rgba(255, 255, 255, 0.015);
@@ -90,7 +79,6 @@
             background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            padding-left: 4px;
         }
 
         .btn-new-chat {
@@ -108,11 +96,7 @@
             font-size: 0.88rem;
             transition: all 0.3s;
         }
-        .btn-new-chat:hover {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-            transform: translateY(-1px);
-        }
+        .btn-new-chat:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
 
         .nav-list { display: flex; flex-direction: column; gap: 4px; }
         .nav-item {
@@ -126,12 +110,8 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .nav-item:hover, .nav-item.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
+        .nav-item:hover, .nav-item.active { background: rgba(255, 255, 255, 0.1); color: #fff; }
 
-        /* Widget Box */
         .widget-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -142,13 +122,7 @@
         }
         .widget-title { font-weight: 600; color: #38bdf8; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
 
-        /* Main Chat */
-        .main-chat {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: transparent;
-        }
+        .main-chat { flex: 1; display: flex; flex-direction: column; background: transparent; }
 
         .chat-header {
             height: 58px;
@@ -161,103 +135,232 @@
             backdrop-filter: blur(20px);
         }
 
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
+        .status-badge { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem; }
 
         .led-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #38bdf8;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
-            animation: pulse-led 2s infinite;
+            width: 8px; height: 8px; background-color: #38bdf8; border-radius: 50%;
+            box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8; animation: pulse-led 2s infinite;
         }
+        @keyframes pulse-led { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-        @keyframes pulse-led {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
+        .chat-messages { flex: 1; padding: 22px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
 
-        .chat-messages {
-            flex: 1;
-            padding: 22px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .message {
-            display: flex;
-            gap: 12px;
-            max-width: 82%;
-            line-height: 1.5;
-        }
+        .message { display: flex; gap: 12px; max-width: 82%; line-height: 1.5; }
         .message.user { align-self: flex-end; flex-direction: row-reverse; }
         .message.bot { align-self: flex-start; }
 
         .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .user .avatar { background: linear-gradient(135deg, #2563eb, #38bdf8); color: #fff; }
         .bot .avatar { background: linear-gradient(135deg, #0d9488, #14b8a6); color: #fff; }
 
         .bubble {
-            padding: 14px 18px;
-            border-radius: 20px;
-            font-size: 0.92rem;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            white-space: pre-wrap;
+            padding: 14px 18px; border-radius: 20px; font-size: 0.92rem;
+            backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.12); white-space: pre-wrap;
         }
-        .user .bubble {
-            background: rgba(37, 99, 235, 0.85);
-            color: #fff;
-            border-bottom-right-radius: 4px;
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        .user .bubble { background: rgba(37, 99, 235, 0.85); color: #fff; border-bottom-right-radius: 4px; }
+        .bot .bubble { background: rgba(255, 255, 255, 0.05); color: #f4f4f5; border-bottom-left-radius: 4px; }
+
+        .suggestions { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-top: 14px; }
+        .sugg-card {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 14px; border-radius: 14px; cursor: pointer; font-size: 0.82rem; color: #cbd5e1;
+            transition: all 0.2s; display: flex; align-items: center; gap: 8px;
         }
-        .bot .bubble {
-            background: rgba(255, 255, 255, 0.05);
-            color: #f4f4f5;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        .sugg-card:hover { background: rgba(255, 255, 255, 0.12); color: #fff; border-color: #38bdf8; transform: translateY(-2px); }
+
+        .input-area { padding: 16px 24px; background: transparent; }
+        .input-wrapper {
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px; padding: 6px 14px; display: flex; align-items: center; gap: 10px;
+        }
+        input { flex: 1; background: transparent; border: none; outline: none; color: #fff; padding: 8px; font-size: 0.92rem; }
+        input::placeholder { color: #94a3b8; }
+
+        .btn-send {
+            background: linear-gradient(135deg, #2563eb, #38bdf8); color: #fff; border: none;
+            width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="led-border-wrap">
+        <div class="app-container">
+            
+            <div class="sidebar">
+                <div class="brand"><i class="fa-solid fa-sparkles"></i> AI Study iOS</div>
+                
+                <button class="btn-new-chat" onclick="clearChat()"><i class="fa-solid fa-plus"></i> Cuộc trò chuyện mới</button>
+
+                <div class="nav-list">
+                    <div class="nav-item active"><i class="fa-solid fa-message"></i> Trợ lý Học tập</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Lập lộ trình ôn thi HSA mục tiêu MTA')"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Gợi ý dự án CLB STEM Arduino')"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
+                </div>
+
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-key"></i> Nạp API Key Gemini</div>
+                    <input type="password" id="apiKeyInput" placeholder="Dán API Key..." style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #fff; padding: 5px; font-size: 0.75rem; outline: none;" onchange="saveApiKey()">
+                </div>
+
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-bullseye"></i> Đếm ngược thi HSA</div>
+                    <div id="countdownHSA" style="font-size: 0.88rem; font-weight: bold; color: #f472b6;">Đang tính...</div>
+                </div>
+
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-hourglass-half"></i> Tốt nghiệp C3 (MTA)</div>
+                    <div id="countdownUni" style="font-size: 0.88rem; font-weight: bold; color: #38bdf8;">Đang tính...</div>
+                </div>
+
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-stopwatch"></i> Hẹn giờ Pomodoro</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+                        <span id="timerDisplay" style="font-weight: bold; color: #38bdf8; font-size: 0.9rem;">25:00</span>
+                        <button onclick="startPomodoro()" style="background: #2563eb; color: #fff; border: none; padding: 3px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem;">Bắt đầu</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-chat">
+                <div class="chat-header">
+                    <div class="status-badge"><span class="led-dot"></span><span>Trợ Lý AI Học Tập (THPT Nam Trực)</span></div>
+                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> Ready</span>
+                </div>
+
+                <div class="chat-messages" id="chatBox"></div>
+
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <input type="text" id="userInput" placeholder="Hỏi bài tập, tra cấu trúc, lập kế hoạch học..." onkeydown="handleKeyPress(event)">
+                        <button class="btn-send" onclick="sendMessage()"><i class="fa-solid fa-arrow-up"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const SYSTEM_PERSONA = "Bạn là trợ lý AI riêng của Minh, học sinh THPT Nam Trực (Nam Định). Minh có mục tiêu ôn thi Đánh giá năng lực (HSA) để vào Học viện Kỹ thuật Quân sự (MTA), yêu thích STEM, Arduino. Hãy hỗ trợ Minh chính xác và nhanh chóng.";
+
+        let chatHistory = JSON.parse(localStorage.getItem("STUDY_CHAT_HISTORY")) || [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedKey = localStorage.getItem("GEMINI_API_KEY");
+            if (savedKey) document.getElementById("apiKeyInput").value = savedKey;
+            renderChat();
+            updateCountdowns();
+            setInterval(updateCountdowns, 1000);
+        });
+
+        function saveApiKey() {
+            const key = document.getElementById("apiKeyInput").value.trim();
+            localStorage.setItem("GEMINI_API_KEY", key);
         }
 
-        /* Thẻ Gợi Ý Nhanh */
-        .suggestions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 10px;
-            margin-top: 14px;
+        function renderChat() {
+            const chatBox = document.getElementById("chatBox");
+            if (chatHistory.length === 0) {
+                chatBox.innerHTML = `
+                    <div class="message bot">
+                        <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                        <div class="bubble">
+                            Chào Minh! Mình đã sẵn sàng đồng hành cùng bạn tại THPT Nam Trực. Dán API Key vào thanh sidebar bên trái để bắt đầu nhé! 🚀
+                            <div class="suggestions">
+                                <div class="sugg-card" onclick="sendQuickMsg('Giải bài tập Toán / Lý lớp 10')"><i class="fa-solid fa-calculator" style="color: #38bdf8;"></i> Bài tập Toán / Lý</div>
+                                <div class="sugg-card" onclick="sendQuickMsg('Lộ trình luyện thi HSA / MTA')"><i class="fa-solid fa-bullseye" style="color: #f472b6;"></i> Ôn HSA/MTA</div>
+                            </div>
+                        </div>
+                    </div>`;
+            } else {
+                chatBox.innerHTML = "";
+                chatHistory.forEach(msg => {
+                    let msgDiv = document.createElement("div");
+                    msgDiv.className = `message ${msg.role}`;
+                    let icon = msg.role === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-robot"></i>';
+                    msgDiv.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${escapeHtml(msg.content)}</div>`;
+                    chatBox.appendChild(msgDiv);
+                });
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
-        .sugg-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 14px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-size: 0.82rem;
-            color: #cbd5e1;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(15px);
+
+        function updateCountdowns() {
+            const now = new Date().getTime();
+            const hsaDate = new Date("May 10, 2029 07:00:00").getTime();
+            const uniDate = new Date("June 26, 2029 07:00:00").getTime();
+
+            const hsaLeft = hsaDate - now;
+            if (hsaLeft > 0) document.getElementById("countdownHSA").textContent = `${Math.floor(hsaLeft / 86400000)} ngày nữa`;
+
+            const uniLeft = uniDate - now;
+            if (uniLeft > 0) document.getElementById("countdownUni").textContent = `${Math.floor(uniLeft / 86400000)} ngày nữa`;
         }
-        .sugg-card:hover {
-            background: rgba(255, 25
+
+        async function sendMessage() {
+            let input = document.getElementById("userInput");
+            let text = input.value.trim();
+            if (!text) return;
+
+            chatHistory.push({ role: 'user', content: text });
+            localStorage.setItem("STUDY_CHAT_HISTORY", JSON.stringify(chatHistory));
+            renderChat();
+            input.value = "";
+
+            const apiKey = localStorage.getItem("GEMINI_API_KEY");
+            if (!apiKey) {
+                chatHistory.push({ role: 'bot', content: "⚠️ Chưa dán API Key! Bạn dán API Key Gemini ở menu bên trái nhé." });
+                renderChat();
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [
+                            { role: "user", parts: [{ text: SYSTEM_PERSONA }] },
+                            { role: "model", parts: [{ text: "Đã hiểu." }] },
+                            ...chatHistory.map(h => ({ role: h.role === 'user' ? 'user' : 'model', parts: [{ text: h.content }] }))
+                        ]
+                    })
+                });
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    chatHistory.push({ role: 'bot', content: data.candidates[0].content.parts[0].text });
+                } else {
+                    chatHistory.push({ role: 'bot', content: "❌ API Key không đúng hoặc hết lượt dùng. Hãy kiểm tra lại nhé!" });
+                }
+            } catch (err) {
+                chatHistory.push({ role: 'bot', content: "❌ Lỗi kết nối: " + err.message });
+            }
+            localStorage.setItem("STUDY_CHAT_HISTORY", JSON.stringify(chatHistory));
+            renderChat();
+        }
+
+        function sendQuickMsg(text) { document.getElementById("userInput").value = text; sendMessage(); }
+        function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+        function clearChat() { chatHistory = []; localStorage.removeItem("STUDY_CHAT_HISTORY"); renderChat(); }
+
+        let timerInterval;
+        function startPomodoro() {
+            clearInterval(timerInterval);
+            let totalSeconds = 25 * 60;
+            timerInterval = setInterval(() => {
+                let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
+                document.getElementById("timerDisplay").textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                if (totalSeconds > 0) totalSeconds--;
+                else { clearInterval(timerInterval); alert("Hết 25 phút tập trung!"); }
+            }, 1000);
+        }
+
+        function escapeHtml(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+    </script>
+</body>
+</html>
