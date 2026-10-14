@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Assistant - iOS 26 Ultimate Suite</title>
+    <title>AI Study Assistant - iOS 26 Perfect Suite</title>
     <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,6 +11,10 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif; }
         
+        /* Ẩn hoàn toàn thanh cuộn trên toàn trang nhưng vẫn cuộn được nội dung */
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
+
         body { 
             background: #020408; 
             color: #f4f4f5; 
@@ -19,7 +23,7 @@
             justify-content: center; 
             align-items: center; 
             overflow: hidden; 
-            padding: 24px;
+            padding: 16px;
             background-image: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
                               radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.2) 0%, transparent 45%),
                               radial-gradient(circle at 50% 50%, rgba(3, 7, 18, 0.95) 100%);
@@ -29,15 +33,15 @@
         .led-border-wrap {
             position: relative;
             width: 100%;
-            max-width: 1450px;
+            max-width: 1400px;
             height: 100%;
-            max-height: 900px;
-            border-radius: 36px;
+            max-height: 850px;
+            border-radius: 32px;
             padding: 3px;
             background: linear-gradient(60deg, #38bdf8, #818cf8, #c084fc, #f472b6, #38bdf8);
             background-size: 300% 300%;
             animation: animated-gradient 5s ease infinite;
-            box-shadow: 0 0 50px rgba(56, 189, 248, 0.35), 0 0 100px rgba(192, 132, 242, 0.2);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.3), 0 0 80px rgba(192, 132, 242, 0.15);
         }
 
         @keyframes animated-gradient {
@@ -50,30 +54,29 @@
         .app-container {
             width: 100%;
             height: 100%;
-            background: rgba(13, 20, 35, 0.5);
-            backdrop-filter: blur(50px);
-            -webkit-backdrop-filter: blur(50px);
-            border-radius: 34px;
+            background: rgba(13, 20, 35, 0.55);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 30px;
             display: flex;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Sidebar iOS */
+        /* Sidebar iOS - Đã ẩn thanh cuộn */
         .sidebar {
-            width: 300px;
+            width: 290px;
             background: rgba(255, 255, 255, 0.02);
             border-right: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             flex-direction: column;
-            padding: 24px 18px;
-            gap: 16px;
-            backdrop-filter: blur(20px);
+            padding: 20px 16px;
+            gap: 12px;
             overflow-y: auto;
         }
 
         .brand {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -87,50 +90,50 @@
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff;
-            padding: 12px;
-            border-radius: 18px;
+            padding: 10px;
+            border-radius: 14px;
             cursor: pointer;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-size: 0.9rem;
             transition: all 0.3s;
         }
         .btn-new-chat:hover {
             background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            transform: translateY(-1px);
         }
 
-        .nav-list { display: flex; flex-direction: column; gap: 6px; }
+        .nav-list { display: flex; flex-direction: column; gap: 4px; }
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: 14px;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 12px;
             color: #94a3b8;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: 0.2s;
         }
         .nav-item:hover, .nav-item.active {
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         /* Tiện ích Mini trong Sidebar */
         .widget-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 12px 14px;
-            font-size: 0.85rem;
+            border-radius: 14px;
+            padding: 10px 12px;
+            font-size: 0.8rem;
             color: #cbd5e1;
         }
-        .widget-title { font-weight: 600; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+        .widget-title { font-weight: 600; color: #38bdf8; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
 
         /* Khung Chat chính */
         .main-chat {
@@ -141,8 +144,8 @@
         }
 
         .chat-header {
-            height: 65px;
-            padding: 0 28px;
+            height: 60px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -156,7 +159,7 @@
             align-items: center;
             gap: 8px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .led-dot {
@@ -164,7 +167,7 @@
             height: 8px;
             background-color: #38bdf8;
             border-radius: 50%;
-            box-shadow: 0 0 12px #38bdf8, 0 0 24px #38bdf8;
+            box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
             animation: pulse-led 2s infinite;
         }
 
@@ -176,16 +179,16 @@
 
         .chat-messages {
             flex: 1;
-            padding: 28px;
+            padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .message {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             max-width: 80%;
             line-height: 1.5;
         }
@@ -193,23 +196,23 @@
         .message.bot { align-self: flex-start; }
 
         .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .user .avatar { background: linear-gradient(135deg, #2563eb, #38bdf8); color: #fff; }
         .bot .avatar { background: linear-gradient(135deg, #0d9488, #14b8a6); color: #fff; }
 
         .bubble {
-            padding: 16px 20px;
-            border-radius: 22px;
-            font-size: 0.95rem;
+            padding: 14px 18px;
+            border-radius: 20px;
+            font-size: 0.92rem;
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -217,48 +220,48 @@
         .user .bubble {
             background: rgba(37, 99, 235, 0.85);
             color: #fff;
-            border-bottom-right-radius: 6px;
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
         }
         .bot .bubble {
             background: rgba(255, 255, 255, 0.05);
             color: #f4f4f5;
-            border-bottom-left-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
         }
 
         /* Thẻ Gợi Ý Nhanh */
         .suggestions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
         }
         .sugg-card {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 16px;
-            border-radius: 16px;
+            padding: 10px 14px;
+            border-radius: 14px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: #cbd5e1;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             backdrop-filter: blur(15px);
         }
         .sugg-card:hover {
             background: rgba(255, 255, 255, 0.12);
             color: #fff;
             border-color: #38bdf8;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
             transform: translateY(-2px);
         }
 
         /* Input Area Trực quan bo tròn */
         .input-area {
-            padding: 20px 28px;
+            padding: 16px 24px;
             background: transparent;
         }
 
@@ -266,19 +269,19 @@
             position: relative;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 26px;
-            padding: 8px 16px;
+            border-radius: 24px;
+            padding: 6px 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             transition: all 0.3s;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
         }
         .input-wrapper:focus-within {
             border-color: #38bdf8;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
         }
 
         input {
@@ -287,8 +290,8 @@
             border: none;
             outline: none;
             color: #fff;
-            padding: 10px;
-            font-size: 0.95rem;
+            padding: 8px;
+            font-size: 0.92rem;
         }
         input::placeholder { color: #94a3b8; }
 
@@ -296,8 +299,8 @@
             background: transparent;
             border: none;
             color: #94a3b8;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
             transition: 0.2s;
@@ -314,19 +317,19 @@
             background: linear-gradient(135deg, #2563eb, #38bdf8);
             color: #fff;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
         }
         .btn-send:hover {
             transform: scale(1.08);
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.8);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
         }
 
         @media (max-width: 768px) {
@@ -343,7 +346,7 @@
     <div class="led-border-wrap">
         <div class="app-container">
             
-            <!-- Sidebar iOS & Tiện ích -->
+            <!-- Sidebar iOS & Tiện ích (Đã ẩn thanh cuộn) -->
             <div class="sidebar">
                 <div class="brand">
                     <i class="fa-solid fa-sparkles"></i> AI Study iOS
@@ -357,28 +360,28 @@
                     <div class="nav-item active"><i class="fa-solid fa-message"></i> Trợ lý Học tập</div>
                     <div class="nav-item" onclick="sendQuickMsg('Lập lộ trình ôn thi HSA / MTA')"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
                     <div class="nav-item" onclick="sendQuickMsg('Gợi ý dự án STEM Arduino/TinkerCAD')"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
-                    <div class="nav-item" onclick="sendQuickMsg('Mẹo quản lý thời gian học tập hiệu quả')"><i class="fa-solid fa-clock"></i> Pomodoro & Focus</div>
                 </div>
 
-                <!-- Tiện ích 1: Đếm ngược thời gian / Ngày tháng -->
+                <!-- Tiện ích 1: Đếm ngược THPT Quốc Gia / Đại học -->
                 <div class="widget-box">
-                    <div class="widget-title"><i class="fa-solid fa-calendar-days"></i> Năm học 2026 - 2027</div>
-                    <div style="font-size: 0.8rem; color: #94a3b8;">THPT Nam Trực - Khối 10<br>Mục tiêu: Săn học bổng Đại học & HSA</div>
+                    <div class="widget-title"><i class="fa-solid fa-hourglass-half"></i> Đếm ngược Tốt nghiệp C3</div>
+                    <div id="countdownUni" style="font-size: 0.9rem; font-weight: bold; color: #38bdf8; margin-top: 4px;">Đang tính toán...</div>
+                    <div style="font-size: 0.75px; color: #94a3b8; margin-top: 2px;">Mục tiêu: Học viện KT Quân sự (MTA)</div>
                 </div>
 
                 <!-- Tiện ích 2: Pomodoro nhanh -->
                 <div class="widget-box">
-                    <div class="widget-title"><i class="fa-solid fa-stopwatch"></i> Hẹn giờ học tập</div>
+                    <div class="widget-title"><i class="fa-solid fa-stopwatch"></i> Hẹn giờ Pomodoro</div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-                        <span id="timerDisplay" style="font-weight: bold; color: #38bdf8; font-size: 1rem;">25:00</span>
-                        <button onclick="startPomodoro()" style="background: #2563eb; color: #fff; border: none; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75rem;">Bắt đầu</button>
+                        <span id="timerDisplay" style="font-weight: bold; color: #38bdf8; font-size: 0.95rem;">25:00</span>
+                        <button onclick="startPomodoro()" style="background: #2563eb; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem;">Bắt đầu</button>
                     </div>
                 </div>
 
                 <!-- Tiện ích 3: Ghi chú nhanh cá nhân -->
                 <div class="widget-box" style="margin-top: auto;">
                     <div class="widget-title"><i class="fa-solid fa-note-sticky"></i> Ghi chú nhanh</div>
-                    <textarea placeholder="Nhập nhanh ý tưởng, công thức..." style="width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; padding: 6px; font-size: 0.8rem; resize: none; height: 50px; outline: none;"></textarea>
+                    <textarea placeholder="Nhập công thức, ý tưởng..." style="width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; padding: 6px; font-size: 0.78rem; resize: none; height: 45px; outline: none;"></textarea>
                 </div>
             </div>
 
@@ -389,14 +392,14 @@
                         <span class="led-dot"></span>
                         <span>Trợ Lý AI Học Tập</span>
                     </div>
-                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> Ultimate Suite v26.0</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> iOS 26 Perfect Suite</span>
                 </div>
 
                 <div class="chat-messages" id="chatBox">
                     <div class="message bot">
                         <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                         <div class="bubble">
-                            Chào Minh! Giao diện đã được bổ sung thêm các tiện ích thông minh (Pomodoro, Ghi chú nhanh, Lịch học tập) cùng dải LED viền RGB rực rỡ. Hôm nay chúng ta bắt đầu với môn học nào? 🚀
+                            Chào Minh! Thanh cuộn thô đã được ẩn hoàn toàn cho mượt mà, đồng thời **bộ đếm ngược đến kỳ thi Tốt nghiệp THPT & Đại học** đã được kích hoạt ở sidebar. Hôm nay bạn cần hỗ trợ ôn tập mục tiêu nào tại THPT Nam Trực? 🚀
                             
                             <div class="suggestions">
                                 <div class="sugg-card" onclick="sendQuickMsg('Giải bài tập Toán / Lý lớp 10')">
@@ -432,6 +435,23 @@
     </div>
 
     <script>
+        // Đếm ngược đến kỳ thi Tốt nghiệp THPT (Giả định ngày 26/06/2029)
+        function updateCountdown() {
+            const targetDate = new Date("June 26, 2029 07:00:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("countdownUni").textContent = `${days} ngày ${hours} giờ nữa`;
+            } else {
+                document.getElementById("countdownUni").textContent = "Chúc bạn thi tốt!";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
         function sendMessage() {
             let input = document.getElementById("userInput");
             let text = input.value.trim();
@@ -452,7 +472,7 @@
             setTimeout(() => {
                 let botMsg = document.createElement("div");
                 botMsg.className = "message bot";
-                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận câu hỏi: "<b>${escapeHtml(text)}</b>".<br><br>Đang tra cứu cơ sở dữ liệu học tập để giải quyết cho bạn...</div>`;
+                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận câu hỏi: "<b>${escapeHtml(text)}</b>".<br><br>Đang tra cứu cơ sở dữ liệu để hỗ trợ bạn hoàn thành mục tiêu Đại học!</div>`;
                 chatBox.appendChild(botMsg);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 500);
@@ -475,7 +495,7 @@
                 </div>`;
         }
 
-        // Pomodoro Timer đơn giản
+        // Pomodoro Timer
         let timerInterval;
         function startPomodoro() {
             clearInterval(timerInterval);
