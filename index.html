@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Assistant - iOS 26 Futuristic</title>
+    <title>AI Study Assistant - iOS Translucent UI</title>
     <!-- FontAwesome Icons & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif; }
         
         body { 
-            background: #050508; 
+            background: #0b131e; 
             color: #f4f4f5; 
             height: 100vh; 
             display: flex; 
@@ -20,19 +20,23 @@
             align-items: center; 
             overflow: hidden; 
             padding: 12px;
+            /* Hiệu ứng nền gradient mượt mà chuẩn concept iOS translucent */
+            background-image: radial-gradient(circle at 20% 20%, rgba(32, 120, 200, 0.25) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(45, 180, 150, 0.2) 0%, transparent 50%),
+                              radial-gradient(circle at 50% 50%, rgba(15, 25, 45, 0.9) 100%);
         }
 
-        /* Khung chứa viền LED RGB bọc ngoài */
+        /* Khung chứa viền LED RGB bọc ngoài thanh lịch */
         .led-border-wrap {
             position: relative;
             width: 100%;
             height: 100%;
-            border-radius: 24px;
+            border-radius: 26px;
             padding: 2px;
-            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(59,130,246,0.5), rgba(45,212,191,0.4), rgba(255,255,255,0.1));
             background-size: 300% 300%;
-            animation: animated-gradient 6s ease infinite;
-            box-shadow: 0 0 25px rgba(111, 186, 130, 0.25), 0 0 50px rgba(80, 115, 184, 0.15);
+            animation: animated-gradient 10s ease infinite;
+            box-shadow: 0 0 40px rgba(32, 120, 200, 0.25), 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
         @keyframes animated-gradient {
@@ -41,21 +45,23 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Giao diện app chính bên trong kính mờ */
+        /* Giao diện app chính kính mờ trong suốt hòa quyện */
         .app-container {
             width: 100%;
             height: 100%;
-            background: rgba(13, 13, 18, 0.92);
-            backdrop-filter: blur(30px);
-            border-radius: 22px;
+            background: rgba(18, 30, 48, 0.55); /* Trong suốt, hòa màu cùng nền gradient */
+            backdrop-filter: blur(50px); /* Hiệu ứng kính mờ sâu */
+            -webkit-backdrop-filter: blur(50px);
+            border-radius: 24px;
             display: flex;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        /* Sidebar iOS */
+        /* Sidebar kiểu iOS Translucent */
         .sidebar {
             width: 280px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border-right: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             flex-direction: column;
@@ -69,13 +75,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6);
+            background: linear-gradient(135deg, #60a5fa, #38bdf8, #2dd4bf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .btn-new-chat {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff;
             padding: 12px;
@@ -87,11 +93,11 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.3s;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
         }
         .btn-new-chat:hover {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
             transform: translateY(-1px);
         }
 
@@ -102,7 +108,7 @@
             gap: 12px;
             padding: 12px 14px;
             border-radius: 14px;
-            color: #a1a1aa;
+            color: #94a3b8;
             font-size: 0.9rem;
             cursor: pointer;
             transition: 0.2s;
@@ -113,12 +119,13 @@
         }
 
         .info-card {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 14px;
             font-size: 0.85rem;
-            color: #a1a1aa;
+            color: #94a3b8;
+            backdrop-filter: blur(10px);
         }
 
         /* Khung Chat chính */
@@ -137,6 +144,7 @@
             justify-content: space-between;
             background: rgba(255, 255, 255, 0.02);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
         }
 
         .status-badge {
@@ -150,9 +158,9 @@
         .led-dot {
             width: 8px;
             height: 8px;
-            background-color: #22c55e;
+            background-color: #38bdf8;
             border-radius: 50%;
-            box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+            box-shadow: 0 0 12px #38bdf8, 0 0 24px #38bdf8;
             animation: pulse-led 2s infinite;
         }
 
@@ -183,34 +191,36 @@
         .avatar {
             width: 38px;
             height: 38px;
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         .user .avatar { background: linear-gradient(135deg, #2563eb, #3b82f6); color: #fff; }
-        .bot .avatar { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+        .bot .avatar { background: linear-gradient(135deg, #0d9488, #14b8a6); color: #fff; }
 
         .bubble {
             padding: 14px 18px;
             border-radius: 20px;
             font-size: 0.95rem;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
         }
         .user .bubble {
-            background: #2563eb;
+            background: rgba(37, 99, 235, 0.85);
             color: #fff;
             border-bottom-right-radius: 4px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
         }
         .bot .bubble {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #f4f4f5;
             border-bottom-left-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         /* Thẻ Gợi Ý Nhanh */
@@ -221,27 +231,28 @@
             margin-top: 16px;
         }
         .sugg-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 12px 14px;
             border-radius: 14px;
             cursor: pointer;
             font-size: 0.85rem;
-            color: #a1a1aa;
+            color: #cbd5e1;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
+            backdrop-filter: blur(10px);
         }
         .sugg-card:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            border-color: #3b82f6;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+            border-color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
             transform: translateY(-2px);
         }
 
-        /* Input Area iOS 26 */
+        /* Input Area Translucent */
         .input-area {
             padding: 20px 28px;
             background: transparent;
@@ -249,19 +260,21 @@
 
         .input-wrapper {
             position: relative;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 22px;
+            border-radius: 24px;
             padding: 8px 14px;
             display: flex;
             align-items: center;
             gap: 10px;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         .input-wrapper:focus-within {
-            border-color: #3b82f6;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            border-color: #38bdf8;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
         }
 
         input {
@@ -273,12 +286,12 @@
             padding: 8px;
             font-size: 0.95rem;
         }
-        input::placeholder { color: #71717a; }
+        input::placeholder { color: #94a3b8; }
 
         .btn-icon {
             background: transparent;
             border: none;
-            color: #a1a1aa;
+            color: #94a3b8;
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -294,22 +307,22 @@
         }
 
         .btn-send {
-            background: #2563eb;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
             color: #fff;
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
         }
         .btn-send:hover {
             transform: scale(1.08);
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
         }
 
         @media (max-width: 768px) {
@@ -326,10 +339,10 @@
     <div class="led-border-wrap">
         <div class="app-container">
             
-            <!-- Sidebar iOS -->
+            <!-- Sidebar iOS Translucent -->
             <div class="sidebar">
                 <div class="brand">
-                    <i class="fa-solid fa-sparkles"></i> AI Study iOS 26
+                    <i class="fa-solid fa-sparkles"></i> AI Study iOS
                 </div>
                 
                 <button class="btn-new-chat" onclick="clearChat()">
@@ -356,24 +369,24 @@
                         <span class="led-dot"></span>
                         <span>Trợ Lý AI Học Tập</span>
                     </div>
-                    <span style="font-size: 0.8rem; color: #71717a;"><i class="fa-solid fa-bolt" style="color: #eab308;"></i> Spatial UI v26.0</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> Translucent UI v26.0</span>
                 </div>
 
                 <div class="chat-messages" id="chatBox">
                     <div class="message bot">
                         <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                         <div class="bubble">
-                            Chào Minh! Trợ lý AI iOS 26 Futurism đã sẵn sàng đồng hành cùng bạn tại THPT Nam Trực. Hôm nay bạn cần giải bài tập hay ôn luyện nội dung gì? 🚀
+                            Chào Minh! Giao diện kính mờ trong suốt hòa quyện màu sắc đã sẵn sàng. Hôm nay bạn cần hỗ trợ ôn tập môn gì tại THPT Nam Trực? 🚀
                             
                             <div class="suggestions">
                                 <div class="sugg-card" onclick="sendQuickMsg('Giải bài tập Toán / Lý lớp 10')">
-                                    <i class="fa-solid fa-calculator" style="color: #60a5fa;"></i> Bài tập Toán / Lý
+                                    <i class="fa-solid fa-calculator" style="color: #38bdf8;"></i> Bài tập Toán / Lý
                                 </div>
                                 <div class="sugg-card" onclick="sendQuickMsg('Lộ trình luyện thi HSA / MTA cấp 3')">
                                     <i class="fa-solid fa-bullseye" style="color: #f472b6;"></i> Định hướng HSA/MTA
                                 </div>
                                 <div class="sugg-card" onclick="sendQuickMsg('Sửa bài luận Tiếng Anh & Ngữ pháp')">
-                                    <i class="fa-solid fa-language" style="color: #34d399;"></i> Sửa Tiếng Anh
+                                    <i class="fa-solid fa-language" style="color: #2dd4bf;"></i> Sửa Tiếng Anh
                                 </div>
                                 <div class="sugg-card" onclick="sendQuickMsg('Ý tưởng thiết kế STEM TinkerCAD / Arduino')">
                                     <i class="fa-solid fa-code" style="color: #c084fc;"></i> Dự án STEM
@@ -419,7 +432,7 @@
             setTimeout(() => {
                 let botMsg = document.createElement("div");
                 botMsg.className = "message bot";
-                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận: "<b>${escapeHtml(text)}</b>".<br><br>Đang tính toán và xử lý câu trả lời cho bạn...</div>`;
+                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận: "<b>${escapeHtml(text)}</b>".<br><br>Đang xử lý dữ liệu học tập cho bạn...</div>`;
                 chatBox.appendChild(botMsg);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 500);
@@ -438,7 +451,7 @@
             document.getElementById("chatBox").innerHTML = `
                 <div class="message bot">
                     <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                    <div class="bubble">Đã dọn dẹp đoạn chat! Bạn cần hỗ trợ gì tiếp theo?</div>
+                    <div class="bubble">Đã làm mới cuộc trò chuyện. Hãy nhập câu hỏi mới nhé!</div>
                 </div>`;
         }
 
