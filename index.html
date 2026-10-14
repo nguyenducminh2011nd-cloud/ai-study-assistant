@@ -3,45 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Assistant - iOS 26 Perfect Suite</title>
-    <!-- FontAwesome & Google Fonts -->
+    <title>AI Study Assistant - iOS 26 Master Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif; }
         
-        /* Ẩn hoàn toàn thanh cuộn trên toàn trang nhưng vẫn cuộn được nội dung */
+        /* Ẩn hoàn toàn thanh cuộn */
         ::-webkit-scrollbar { display: none; }
         * { -ms-overflow-style: none; scrollbar-width: none; }
 
         body { 
-            background: #020408; 
+            background: #010204; 
             color: #f4f4f5; 
             height: 100vh; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             overflow: hidden; 
-            padding: 16px;
-            background-image: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
-                              radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.2) 0%, transparent 45%),
-                              radial-gradient(circle at 50% 50%, rgba(3, 7, 18, 0.95) 100%);
+            padding: 14px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.25) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.22) 0%, transparent 40%),
+                              radial-gradient(circle at 50% 50%, rgba(2, 6, 15, 0.98) 100%);
         }
 
         /* Khung dải LED RGB chạy động bọc ngoài */
         .led-border-wrap {
             position: relative;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1420px;
             height: 100%;
-            max-height: 850px;
-            border-radius: 32px;
+            max-height: 840px;
+            border-radius: 30px;
             padding: 3px;
             background: linear-gradient(60deg, #38bdf8, #818cf8, #c084fc, #f472b6, #38bdf8);
             background-size: 300% 300%;
-            animation: animated-gradient 5s ease infinite;
-            box-shadow: 0 0 40px rgba(56, 189, 248, 0.3), 0 0 80px rgba(192, 132, 242, 0.15);
+            animation: animated-gradient 4s ease infinite;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.35), 0 0 90px rgba(192, 132, 242, 0.2);
         }
 
         @keyframes animated-gradient {
@@ -54,24 +53,24 @@
         .app-container {
             width: 100%;
             height: 100%;
-            background: rgba(13, 20, 35, 0.55);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 30px;
+            background: rgba(11, 17, 30, 0.65);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border-radius: 28px;
             display: flex;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Sidebar iOS - Đã ẩn thanh cuộn */
+        /* Sidebar iOS */
         .sidebar {
-            width: 290px;
-            background: rgba(255, 255, 255, 0.02);
+            width: 300px;
+            background: rgba(255, 255, 255, 0.015);
             border-right: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             flex-direction: column;
-            padding: 20px 16px;
-            gap: 12px;
+            padding: 18px 14px;
+            gap: 10px;
             overflow-y: auto;
         }
 
@@ -84,6 +83,7 @@
             background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            padding-left: 4px;
         }
 
         .btn-new-chat {
@@ -98,7 +98,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             transition: all 0.3s;
         }
         .btn-new-chat:hover {
@@ -124,7 +124,7 @@
             color: #fff;
         }
 
-        /* Tiện ích Mini trong Sidebar */
+        /* Widget Box */
         .widget-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -133,9 +133,9 @@
             font-size: 0.8rem;
             color: #cbd5e1;
         }
-        .widget-title { font-weight: 600; color: #38bdf8; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
+        .widget-title { font-weight: 600; color: #38bdf8; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
 
-        /* Khung Chat chính */
+        /* Main Chat */
         .main-chat {
             flex: 1;
             display: flex;
@@ -144,7 +144,7 @@
         }
 
         .chat-header {
-            height: 60px;
+            height: 58px;
             padding: 0 24px;
             display: flex;
             align-items: center;
@@ -179,7 +179,7 @@
 
         .chat-messages {
             flex: 1;
-            padding: 24px;
+            padding: 22px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -189,7 +189,7 @@
         .message {
             display: flex;
             gap: 12px;
-            max-width: 80%;
+            max-width: 82%;
             line-height: 1.5;
         }
         .message.user { align-self: flex-end; flex-direction: row-reverse; }
@@ -198,7 +198,7 @@
         .avatar {
             width: 36px;
             height: 36px;
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -346,7 +346,7 @@
     <div class="led-border-wrap">
         <div class="app-container">
             
-            <!-- Sidebar iOS & Tiện ích (Đã ẩn thanh cuộn) -->
+            <!-- Sidebar iOS & Tiện ích hoàn chỉnh -->
             <div class="sidebar">
                 <div class="brand">
                     <i class="fa-solid fa-sparkles"></i> AI Study iOS
@@ -357,31 +357,38 @@
                 </button>
 
                 <div class="nav-list">
-                    <div class="nav-item active"><i class="fa-solid fa-message"></i> Trợ lý Học tập</div>
-                    <div class="nav-item" onclick="sendQuickMsg('Lập lộ trình ôn thi HSA / MTA')"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
-                    <div class="nav-item" onclick="sendQuickMsg('Gợi ý dự án STEM Arduino/TinkerCAD')"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
+                    <div class="nav-item active" onclick="switchTab('chat')"><i class="fa-solid fa-message"></i> Trợ lý Học tập</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Lập lộ trình ôn thi Đánh giá năng lực HSA mục tiêu MTA')"><i class="fa-solid fa-graduation-cap"></i> Ôn thi HSA / MTA</div>
+                    <div class="nav-item" onclick="sendQuickMsg('Gợi ý ý tưởng dự án CLB STEM Arduino')"><i class="fa-solid fa-microchip"></i> CLB STEM Arduino</div>
                 </div>
 
-                <!-- Tiện ích 1: Đếm ngược THPT Quốc Gia / Đại học -->
+                <!-- Tiện ích 1: Đếm ngược Kỳ thi HSA -->
+                <div class="widget-box">
+                    <div class="widget-title"><i class="fa-solid fa-bullseye"></i> Đếm ngược thi HSA</div>
+                    <div id="countdownHSA" style="font-size: 0.88rem; font-weight: bold; color: #f472b6;">Đang tính...</div>
+                    <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 1px;">Mục tiêu: ĐH Quốc gia Hà Nội</div>
+                </div>
+
+                <!-- Tiện ích 2: Đếm ngược Tốt nghiệp THPT & Đại học -->
                 <div class="widget-box">
                     <div class="widget-title"><i class="fa-solid fa-hourglass-half"></i> Đếm ngược Tốt nghiệp C3</div>
-                    <div id="countdownUni" style="font-size: 0.9rem; font-weight: bold; color: #38bdf8; margin-top: 4px;">Đang tính toán...</div>
-                    <div style="font-size: 0.75px; color: #94a3b8; margin-top: 2px;">Mục tiêu: Học viện KT Quân sự (MTA)</div>
+                    <div id="countdownUni" style="font-size: 0.88rem; font-weight: bold; color: #38bdf8;">Đang tính...</div>
+                    <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 1px;">Mục tiêu: Học viện KT Quân sự</div>
                 </div>
 
-                <!-- Tiện ích 2: Pomodoro nhanh -->
+                <!-- Tiện ích 3: Pomodoro nhanh -->
                 <div class="widget-box">
                     <div class="widget-title"><i class="fa-solid fa-stopwatch"></i> Hẹn giờ Pomodoro</div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-                        <span id="timerDisplay" style="font-weight: bold; color: #38bdf8; font-size: 0.95rem;">25:00</span>
-                        <button onclick="startPomodoro()" style="background: #2563eb; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem;">Bắt đầu</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+                        <span id="timerDisplay" style="font-weight: bold; color: #38bdf8; font-size: 0.9rem;">25:00</span>
+                        <button onclick="startPomodoro()" style="background: #2563eb; color: #fff; border: none; padding: 3px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem;">Bắt đầu</button>
                     </div>
                 </div>
 
-                <!-- Tiện ích 3: Ghi chú nhanh cá nhân -->
+                <!-- Tiện ích 4: Ghi chú nhanh cá nhân -->
                 <div class="widget-box" style="margin-top: auto;">
                     <div class="widget-title"><i class="fa-solid fa-note-sticky"></i> Ghi chú nhanh</div>
-                    <textarea placeholder="Nhập công thức, ý tưởng..." style="width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; padding: 6px; font-size: 0.78rem; resize: none; height: 45px; outline: none;"></textarea>
+                    <textarea placeholder="Nhập nhanh ý tưởng, công thức..." style="width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; padding: 4px; font-size: 0.75rem; resize: none; height: 38px; outline: none;"></textarea>
                 </div>
             </div>
 
@@ -392,14 +399,14 @@
                         <span class="led-dot"></span>
                         <span>Trợ Lý AI Học Tập</span>
                     </div>
-                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> iOS 26 Perfect Suite</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-bolt" style="color: #facc15;"></i> iOS 26 Master Edition</span>
                 </div>
 
                 <div class="chat-messages" id="chatBox">
                     <div class="message bot">
                         <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                         <div class="bubble">
-                            Chào Minh! Thanh cuộn thô đã được ẩn hoàn toàn cho mượt mà, đồng thời **bộ đếm ngược đến kỳ thi Tốt nghiệp THPT & Đại học** đã được kích hoạt ở sidebar. Hôm nay bạn cần hỗ trợ ôn tập mục tiêu nào tại THPT Nam Trực? 🚀
+                            Chào Minh! Bộ đôi đồng hồ đếm ngược **Thi HSA** và **Tốt nghiệp THPT/Đại học (MTA)** đã được kích hoạt đầy đủ ở sidebar. Bạn đã sẵn sàng chinh phục mục tiêu năm học tại THPT Nam Trực chưa? 🚀
                             
                             <div class="suggestions">
                                 <div class="sugg-card" onclick="sendQuickMsg('Giải bài tập Toán / Lý lớp 10')">
@@ -435,22 +442,33 @@
     </div>
 
     <script>
-        // Đếm ngược đến kỳ thi Tốt nghiệp THPT (Giả định ngày 26/06/2029)
-        function updateCountdown() {
-            const targetDate = new Date("June 26, 2029 07:00:00").getTime();
+        // Bộ đếm ngược Kỳ thi Đánh giá năng lực HSA (Giả định tháng 5/2029)
+        function updateCountdowns() {
             const now = new Date().getTime();
-            const timeLeft = targetDate - now;
 
-            if (timeLeft > 0) {
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            // Đếm ngược HSA (Ví dụ: 10/05/2029)
+            const hsaDate = new Date("May 10, 2029 07:00:00").getTime();
+            const hsaLeft = hsaDate - now;
+            if (hsaLeft > 0) {
+                const days = Math.floor(hsaLeft / (1000 * 60 * 60 * 24));
+                document.getElementById("countdownHSA").textContent = `${days} ngày nữa`;
+            } else {
+                document.getElementById("countdownHSA").textContent = "Đang diễn ra kỳ thi!";
+            }
+
+            // Đếm ngược Tốt nghiệp THPT / Đại học (Ví dụ: 26/06/2029)
+            const uniDate = new Date("June 26, 2029 07:00:00").getTime();
+            const uniLeft = uniDate - now;
+            if (uniLeft > 0) {
+                const days = Math.floor(uniLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((uniLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 document.getElementById("countdownUni").textContent = `${days} ngày ${hours} giờ nữa`;
             } else {
-                document.getElementById("countdownUni").textContent = "Chúc bạn thi tốt!";
+                document.getElementById("countdownUni").textContent = "Chúc bạn thành công!";
             }
         }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        setInterval(updateCountdowns, 1000);
+        updateCountdowns();
 
         function sendMessage() {
             let input = document.getElementById("userInput");
@@ -472,7 +490,7 @@
             setTimeout(() => {
                 let botMsg = document.createElement("div");
                 botMsg.className = "message bot";
-                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận câu hỏi: "<b>${escapeHtml(text)}</b>".<br><br>Đang tra cứu cơ sở dữ liệu để hỗ trợ bạn hoàn thành mục tiêu Đại học!</div>`;
+                botMsg.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble">Tôi đã ghi nhận: "<b>${escapeHtml(text)}</b>".<br><br>Đang đồng bộ dữ liệu ôn thi HSA và mục tiêu Đại học cho bạn...</div>`;
                 chatBox.appendChild(botMsg);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 500);
@@ -491,7 +509,7 @@
             document.getElementById("chatBox").innerHTML = `
                 <div class="message bot">
                     <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                    <div class="bubble">Đã làm mới cuộc trò chuyện. Bạn cần hỗ trợ gì tiếp theo?</div>
+                    <div class="bubble">Đã làm mới cuộc trò chuyện. Hãy nhập câu hỏi mới nhé!</div>
                 </div>`;
         }
 
